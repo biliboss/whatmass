@@ -1,0 +1,883 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Masswhats - Send Mass WhatsApp Messages Effortlessly</title>
+    <!-- Tailwind CSS from CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Custom styles -->
+    <style type="text/tailwindcss">
+        @layer utilities {
+            .text-gradient {
+                @apply bg-clip-text text-transparent bg-gradient-to-r from-green-500 to-teal-400;
+            }
+            .btn-primary {
+                @apply px-8 py-3 rounded-full bg-gradient-to-r from-green-500 to-teal-400 text-white font-bold transform transition duration-300 hover:scale-105 hover:shadow-lg;
+            }
+            .btn-secondary {
+                @apply px-8 py-3 rounded-full border-2 border-green-500 text-green-500 font-bold transform transition duration-300 hover:bg-green-50 hover:scale-105;
+            }
+        }
+    </style>
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body class="bg-gray-50 font-sans">
+    <!-- Hero Section -->
+    <header class="bg-white">
+        <div class="container mx-auto px-4 py-6 flex justify-between items-center">
+            <div class="flex items-center">
+                <span class="text-3xl font-bold text-gradient">Masswhats</span>
+                <span class="ml-2 bg-blue-500 text-white text-xs px-2 py-1 rounded-full uppercase font-bold">Beta</span>
+            </div>
+            <nav class="hidden md:flex space-x-8">
+                <a href="#features" class="text-gray-600 hover:text-green-500 transition">Features</a>
+                <a href="#how-it-works" class="text-gray-600 hover:text-green-500 transition">How It Works</a>
+                <a href="#testimonials" class="text-gray-600 hover:text-green-500 transition">Testimonials</a>
+            </nav>
+            <a href="#sync-whatsapp" class="btn-primary hidden md:block">Sync WhatsApp</a>
+            <button class="md:hidden text-gray-500 focus:outline-none">
+                <i class="fas fa-bars text-2xl"></i>
+            </button>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="py-20 bg-gradient-to-b from-white to-gray-50">
+        <div class="container mx-auto px-4 flex flex-col md:flex-row items-center">
+            <div class="md:w-1/2 mb-10 md:mb-0">
+                <div class="inline-block bg-blue-100 text-blue-800 px-4 py-1 rounded-full text-sm font-semibold mb-4">
+                    <span class="mr-1">✨</span> Currently FREE during Beta <span class="ml-1">✨</span>
+                </div>
+                <h1 class="text-4xl md:text-5xl font-bold leading-tight mb-6">
+                    Reach <span class="text-gradient">Thousands</span> of WhatsApp Contacts in Minutes
+                </h1>
+                <p class="text-xl text-gray-600 mb-8">
+                    Stop sending messages one by one. Masswhats helps businesses and professionals send personalized WhatsApp messages at scale, saving you hours every day.
+                </p>
+                <div class="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4">
+                    <a href="#sync-whatsapp" class="btn-primary text-center">Sync Your WhatsApp</a>
+                </div>
+                <div class="mt-6 text-sm text-gray-500">
+                    <i class="fas fa-info-circle mr-1"></i> Free during beta phase. May be priced in the future.
+                </div>
+                <div class="mt-6 flex items-center">
+                    <div class="flex -space-x-2">
+                        <img src="https://randomuser.me/api/portraits/women/17.jpg" class="w-10 h-10 rounded-full border-2 border-white" alt="User">
+                        <img src="https://randomuser.me/api/portraits/men/32.jpg" class="w-10 h-10 rounded-full border-2 border-white" alt="User">
+                        <img src="https://randomuser.me/api/portraits/women/45.jpg" class="w-10 h-10 rounded-full border-2 border-white" alt="User">
+                    </div>
+                    <p class="ml-4 text-gray-600">
+                        <span class="font-bold text-green-500">1,500+</span> businesses trust Masswhats
+                    </p>
+                </div>
+            </div>
+            <div id="sync-whatsapp" class="md:w-1/2 md:pl-10">
+                <div class="bg-white p-8 rounded-2xl shadow-2xl">
+                    <div class="text-center">
+                        <h3 class="text-2xl font-bold mb-4">Connect Your WhatsApp</h3>
+                        <p class="text-gray-600 mb-6">Enter this code in your WhatsApp app to sync with Masswhats</p>
+                        
+                        <div class="flex justify-center mb-6">
+                            <!-- QR Code for desktop -->
+                            <div id="qrcode-container" class="hidden md:block bg-gray-100 py-6 px-8 rounded-xl">
+                                <div id="qrcode-loading" class="flex flex-col items-center justify-center w-64 h-64 hidden">
+                                    <div class="animate-spin rounded-full h-12 w-12 border-b-2 border-green-500"></div>
+                                    <p class="mt-4 text-gray-500">Loading QR Code...</p>
+                                </div>
+                                <img id="qrcode-image" src="https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=https://masswhats.com/connect" alt="QR Code" class="w-64 h-64">
+                            </div>
+                            
+                            <!-- Phone code for mobile -->
+                            <div id="phone-code-container" class="md:hidden bg-gray-100 py-6 px-8 rounded-xl">
+                                <div id="phone-code-loading" class="flex items-center justify-center hidden">
+                                    <div class="animate-spin rounded-full h-5 w-5 border-b-2 border-green-500 mr-2"></div>
+                                    <span class="text-gray-500">Loading...</span>
+                                </div>
+                                <span id="phone-code" class="text-4xl font-mono font-bold tracking-widest text-green-600">233-928</span>
+                            </div>
+                        </div>
+                        
+                        <button id="copyCodeBtn" class="flex items-center justify-center mx-auto px-6 py-3 bg-green-500 text-white rounded-lg hover:bg-green-600 transition">
+                            <i class="fas fa-copy mr-2"></i> Copy Code
+                        </button>
+                        
+                        <div id="codeCopiedMessage" class="hidden mt-3 text-green-500 font-medium">
+                            <i class="fas fa-check-circle mr-1"></i> Code copied!
+                        </div>
+                        
+                        <p class="mt-6 text-sm text-gray-500">
+                            <i class="fas fa-mobile-alt mr-1"></i> Works with any mobile device
+                        </p>
+                        
+                        <div class="mt-6 bg-blue-50 p-3 rounded-lg text-blue-800 text-sm">
+                            <i class="fas fa-gift mr-1"></i> <strong>Free during beta:</strong> Get early access to all features at no cost
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Social Proof -->
+    <section class="py-10 bg-gray-50">
+        <div class="container mx-auto px-4">
+            <p class="text-center text-gray-500 mb-8">TRUSTED BY INDUSTRY LEADERS</p>
+            <div class="flex flex-wrap justify-center items-center gap-8 opacity-70">
+                <img src="https://placehold.co/150x50/CCCCCC/666666/png?text=Company+1" alt="Company 1" class="h-8">
+                <img src="https://placehold.co/150x50/CCCCCC/666666/png?text=Company+2" alt="Company 2" class="h-8">
+                <img src="https://placehold.co/150x50/CCCCCC/666666/png?text=Company+3" alt="Company 3" class="h-8">
+                <img src="https://placehold.co/150x50/CCCCCC/666666/png?text=Company+4" alt="Company 4" class="h-8">
+                <img src="https://placehold.co/150x50/CCCCCC/666666/png?text=Company+5" alt="Company 5" class="h-8">
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section id="features" class="py-20 bg-white">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-4xl font-bold mb-4">Why Businesses Choose Masswhats</h2>
+                <p class="text-xl text-gray-600 max-w-3xl mx-auto">
+                    Our platform is designed to help you connect with your audience efficiently and effectively.
+                </p>
+            </div>
+            
+            <div class="grid md:grid-cols-3 gap-10">
+                <div class="bg-gray-50 p-8 rounded-xl shadow-sm hover:shadow-md transition">
+                    <div class="w-14 h-14 bg-green-100 rounded-full flex items-center justify-center mb-6">
+                        <i class="fas fa-rocket text-2xl text-green-500"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3">Mass Messaging</h3>
+                    <p class="text-gray-600">
+                        Send personalized messages to thousands of contacts with just a few clicks. No more copy-pasting.
+                    </p>
+                </div>
+                
+                <div class="bg-gray-50 p-8 rounded-xl shadow-sm hover:shadow-md transition">
+                    <div class="w-14 h-14 bg-green-100 rounded-full flex items-center justify-center mb-6">
+                        <i class="fas fa-user-check text-2xl text-green-500"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3">Personalization</h3>
+                    <p class="text-gray-600">
+                        Include custom fields like name, company, or any other data to make each message feel personal.
+                    </p>
+                </div>
+                
+                <div class="bg-gray-50 p-8 rounded-xl shadow-sm hover:shadow-md transition">
+                    <div class="w-14 h-14 bg-green-100 rounded-full flex items-center justify-center mb-6">
+                        <i class="fas fa-chart-line text-2xl text-green-500"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3">Analytics</h3>
+                    <p class="text-gray-600">
+                        Track delivery, read receipts, and response rates to optimize your messaging strategy.
+                    </p>
+                </div>
+                
+                <div class="bg-gray-50 p-8 rounded-xl shadow-sm hover:shadow-md transition">
+                    <div class="w-14 h-14 bg-green-100 rounded-full flex items-center justify-center mb-6">
+                        <i class="fas fa-calendar-alt text-2xl text-green-500"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3">Scheduled Sending</h3>
+                    <p class="text-gray-600">
+                        Plan your campaigns in advance and schedule messages to be sent at the perfect time.
+                    </p>
+                </div>
+                
+                <div class="bg-gray-50 p-8 rounded-xl shadow-sm hover:shadow-md transition">
+                    <div class="w-14 h-14 bg-green-100 rounded-full flex items-center justify-center mb-6">
+                        <i class="fas fa-file-import text-2xl text-green-500"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3">CSV Import</h3>
+                    <p class="text-gray-600">
+                        Easily import contacts from Excel or CSV files to quickly build your messaging lists.
+                    </p>
+                </div>
+                
+                <div class="bg-gray-50 p-8 rounded-xl shadow-sm hover:shadow-md transition">
+                    <div class="w-14 h-14 bg-green-100 rounded-full flex items-center justify-center mb-6">
+                        <i class="fas fa-shield-alt text-2xl text-green-500"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3">WhatsApp Compliant</h3>
+                    <p class="text-gray-600">
+                        Our tool works within WhatsApp's guidelines to ensure your account stays safe and active.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- How It Works Section -->
+    <section id="how-it-works" class="py-20 bg-gray-50">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-4xl font-bold mb-4">How Masswhats Works</h2>
+                <p class="text-xl text-gray-600 max-w-3xl mx-auto">
+                    Get started in minutes with our simple 3-step process
+                </p>
+            </div>
+            
+            <div class="grid md:grid-cols-4 gap-6">
+                <div class="text-center">
+                    <div class="w-16 h-16 md:w-20 md:h-20 bg-green-500 rounded-full flex items-center justify-center text-white text-xl md:text-2xl font-bold mx-auto mb-4 md:mb-6">1</div>
+                    <h3 class="text-lg md:text-xl font-bold mb-2 md:mb-3">Connect WhatsApp</h3>
+                    <p class="text-sm md:text-base text-gray-600">
+                        Enter the 6-digit sync code <span class="font-bold text-green-600">233-928</span> in your WhatsApp app to connect.
+                    </p>
+                </div>
+                
+                <div class="text-center">
+                    <div class="w-16 h-16 md:w-20 md:h-20 bg-green-500 rounded-full flex items-center justify-center text-white text-xl md:text-2xl font-bold mx-auto mb-4 md:mb-6">2</div>
+                    <h3 class="text-lg md:text-xl font-bold mb-2 md:mb-3">Import Contacts</h3>
+                    <p class="text-sm md:text-base text-gray-600">
+                        Upload your contact list via CSV or connect your existing CRM system.
+                    </p>
+                </div>
+                
+                <div class="text-center">
+                    <div class="w-16 h-16 md:w-20 md:h-20 bg-green-500 rounded-full flex items-center justify-center text-white text-xl md:text-2xl font-bold mx-auto mb-4 md:mb-6">3</div>
+                    <h3 class="text-lg md:text-xl font-bold mb-2 md:mb-3">Craft Your Message</h3>
+                    <p class="text-sm md:text-base text-gray-600">
+                        Create your message template with personalization fields and media attachments.
+                    </p>
+                </div>
+                
+                <div class="text-center">
+                    <div class="w-16 h-16 md:w-20 md:h-20 bg-green-500 rounded-full flex items-center justify-center text-white text-xl md:text-2xl font-bold mx-auto mb-4 md:mb-6">4</div>
+                    <h3 class="text-lg md:text-xl font-bold mb-2 md:mb-3">Send & Track</h3>
+                    <p class="text-sm md:text-base text-gray-600">
+                        Launch your campaign and monitor results in real-time through our dashboard.
+                    </p>
+                </div>
+            </div>
+            
+            <div class="mt-16 text-center">
+                <a href="#sync-whatsapp" class="btn-primary">Sync Your WhatsApp</a>
+                <p class="mt-4 text-sm text-gray-500">
+                    <i class="fas fa-info-circle mr-1"></i> Free during beta phase. Limited spots available.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials Section -->
+    <section id="testimonials" class="py-20 bg-white">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-4xl font-bold mb-4">What Our Customers Say</h2>
+                <p class="text-xl text-gray-600 max-w-3xl mx-auto">
+                    Join thousands of satisfied businesses that have transformed their WhatsApp marketing
+                </p>
+            </div>
+            
+            <div class="grid md:grid-cols-3 gap-10">
+                <div class="bg-gray-50 p-8 rounded-xl shadow-sm">
+                    <div class="flex items-center mb-4">
+                        <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="Customer" class="w-12 h-12 rounded-full mr-4">
+                        <div>
+                            <h4 class="font-bold">Carlos Rodriguez</h4>
+                            <p class="text-gray-500 text-sm">Marketing Director, TechCorp</p>
+                        </div>
+                    </div>
+                    <div class="text-yellow-400 mb-4">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                    </div>
+                    <p class="text-gray-600">
+                        "Masswhats has revolutionized how we communicate with our customers. We've seen a 40% increase in response rates compared to email campaigns."
+                    </p>
+                </div>
+                
+                <div class="bg-gray-50 p-8 rounded-xl shadow-sm">
+                    <div class="flex items-center mb-4">
+                        <img src="https://randomuser.me/api/portraits/women/45.jpg" alt="Customer" class="w-12 h-12 rounded-full mr-4">
+                        <div>
+                            <h4 class="font-bold">Maria Silva</h4>
+                            <p class="text-gray-500 text-sm">Small Business Owner</p>
+                        </div>
+                    </div>
+                    <div class="text-yellow-400 mb-4">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                    </div>
+                    <p class="text-gray-600">
+                        "As a small business, I couldn't afford to spend hours messaging clients individually. Masswhats saves me at least 15 hours every week!"
+                    </p>
+                </div>
+                
+                <div class="bg-gray-50 p-8 rounded-xl shadow-sm">
+                    <div class="flex items-center mb-4">
+                        <img src="https://randomuser.me/api/portraits/men/67.jpg" alt="Customer" class="w-12 h-12 rounded-full mr-4">
+                        <div>
+                            <h4 class="font-bold">John Doe</h4>
+                            <p class="text-gray-500 text-sm">Sales Manager, RetailPlus</p>
+                        </div>
+                    </div>
+                    <div class="text-yellow-400 mb-4">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star-half-alt"></i>
+                    </div>
+                    <p class="text-gray-600">
+                        "Our sales team has closed 25% more deals since we started using Masswhats for follow-ups. The personalization features are game-changing."
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Beta Information Section -->
+    <section class="py-20 bg-gray-50">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-16">
+                <div class="inline-block bg-blue-500 text-white px-4 py-1 rounded-full text-sm font-bold mb-4">
+                    BETA PROGRAM
+                </div>
+                <h2 class="text-3xl md:text-4xl font-bold mb-4">Join Our Beta Program</h2>
+                <p class="text-xl text-gray-600 max-w-3xl mx-auto">
+                    Get early access to all Masswhats features completely free during our beta phase
+                </p>
+            </div>
+            
+            <div class="max-w-4xl mx-auto bg-white p-8 rounded-xl shadow-md">
+                <div class="grid md:grid-cols-2 gap-8">
+                    <div>
+                        <h3 class="text-2xl font-bold mb-4">Beta Benefits</h3>
+                        <ul class="space-y-4">
+                            <li class="flex items-start">
+                                <i class="fas fa-check-circle text-green-500 mt-1 mr-3 text-xl"></i>
+                                <div>
+                                    <span class="font-bold block">Free Access</span>
+                                    <span class="text-gray-600">All features available at no cost during beta</span>
+                                </div>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-check-circle text-green-500 mt-1 mr-3 text-xl"></i>
+                                <div>
+                                    <span class="font-bold block">Priority Support</span>
+                                    <span class="text-gray-600">Direct access to our development team</span>
+                                </div>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-check-circle text-green-500 mt-1 mr-3 text-xl"></i>
+                                <div>
+                                    <span class="font-bold block">Shape the Product</span>
+                                    <span class="text-gray-600">Your feedback will influence future features</span>
+                                </div>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-check-circle text-green-500 mt-1 mr-3 text-xl"></i>
+                                <div>
+                                    <span class="font-bold block">Early Adopter Advantage</span>
+                                    <span class="text-gray-600">Special pricing when we launch officially</span>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h3 class="text-2xl font-bold mb-4">What You Get</h3>
+                        <ul class="space-y-3">
+                            <li class="flex items-center">
+                                <i class="fas fa-check text-green-500 mr-2"></i>
+                                <span>Unlimited messages during beta</span>
+                            </li>
+                            <li class="flex items-center">
+                                <i class="fas fa-check text-green-500 mr-2"></i>
+                                <span>Advanced personalization features</span>
+                            </li>
+                            <li class="flex items-center">
+                                <i class="fas fa-check text-green-500 mr-2"></i>
+                                <span>CSV contact import</span>
+                            </li>
+                            <li class="flex items-center">
+                                <i class="fas fa-check text-green-500 mr-2"></i>
+                                <span>Scheduled messaging</span>
+                            </li>
+                            <li class="flex items-center">
+                                <i class="fas fa-check text-green-500 mr-2"></i>
+                                <span>Analytics dashboard</span>
+                            </li>
+                            <li class="flex items-center">
+                                <i class="fas fa-check text-green-500 mr-2"></i>
+                                <span>Media attachments</span>
+                            </li>
+                            <li class="flex items-center">
+                                <i class="fas fa-check text-green-500 mr-2"></i>
+                                <span>Priority support</span>
+                            </li>
+                        </ul>
+                        
+                        <div class="mt-8 p-4 bg-yellow-50 rounded-lg border border-yellow-200">
+                            <p class="text-yellow-800 text-sm">
+                                <i class="fas fa-info-circle mr-2"></i> <strong>Note:</strong> Masswhats may introduce paid plans after the beta period. Beta users will receive special pricing options.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="mt-10 text-center">
+                    <a href="#sync-whatsapp" class="btn-primary">Sync Your WhatsApp Now</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section class="py-20 bg-white">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-4xl font-bold mb-4">Frequently Asked Questions</h2>
+                <p class="text-xl text-gray-600 max-w-3xl mx-auto">
+                    Everything you need to know about Masswhats
+                </p>
+            </div>
+            
+            <div class="max-w-3xl mx-auto space-y-6">
+                <div class="border border-gray-200 rounded-lg p-6">
+                    <h3 class="text-xl font-bold mb-3">Is Masswhats compliant with WhatsApp's terms of service?</h3>
+                    <p class="text-gray-600">
+                        Yes, Masswhats operates within WhatsApp's guidelines. We use official WhatsApp Business API to ensure your account remains in good standing while sending mass messages.
+                    </p>
+                </div>
+                
+                <div class="border border-gray-200 rounded-lg p-6">
+                    <h3 class="text-xl font-bold mb-3">How many messages can I send per day?</h3>
+                    <p class="text-gray-600">
+                        During the beta phase, you can send unlimited messages. Our system is designed to send messages at a natural pace to avoid any restrictions from WhatsApp. We recommend starting with smaller batches and gradually increasing volume.
+                    </p>
+                </div>
+                
+                <div class="border border-gray-200 rounded-lg p-6">
+                    <h3 class="text-xl font-bold mb-3">Is Masswhats really free?</h3>
+                    <p class="text-gray-600">
+                        Yes, Masswhats is completely free during our beta phase. We may introduce paid plans in the future, but all beta users will receive special pricing options and advance notice before any changes.
+                    </p>
+                </div>
+                
+                <div class="border border-gray-200 rounded-lg p-6">
+                    <h3 class="text-xl font-bold mb-3">Do I need to install any software?</h3>
+                    <p class="text-gray-600">
+                        No, Masswhats is a cloud-based solution. You only need to connect your WhatsApp account through our secure web interface, and you're ready to start sending messages.
+                    </p>
+                </div>
+                
+                <div class="border border-gray-200 rounded-lg p-6">
+                    <h3 class="text-xl font-bold mb-3">How do I connect my WhatsApp account?</h3>
+                    <p class="text-gray-600">
+                        Simply enter the 6-digit sync code (233-928) in your WhatsApp app. Open WhatsApp on your phone, go to Settings > Linked Devices > Link a Device, and enter the code. The connection is secure and takes less than 30 seconds.
+                    </p>
+                </div>
+                
+                <div class="border border-gray-200 rounded-lg p-6">
+                    <h3 class="text-xl font-bold mb-3">Can I include images or videos in my messages?</h3>
+                    <p class="text-gray-600">
+                        Absolutely! Masswhats supports all media types that WhatsApp allows, including images, videos, documents, and voice messages. Rich media can significantly increase engagement rates.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="py-20 bg-gradient-to-r from-green-500 to-teal-400 text-white">
+        <div class="container mx-auto px-4 text-center">
+            <div class="inline-block bg-white text-blue-500 px-4 py-1 rounded-full text-sm font-bold mb-6">
+                BETA ACCESS
+            </div>
+            <h2 class="text-3xl md:text-4xl font-bold mb-6">Ready to Transform Your WhatsApp Marketing?</h2>
+            <p class="text-xl mb-10 max-w-3xl mx-auto">
+                Join our beta program today and get free access to all Masswhats features.
+            </p>
+            
+            <div class="bg-white p-8 rounded-xl shadow-lg max-w-2xl mx-auto">
+                <div class="flex flex-col md:flex-row items-center">
+                    <div class="md:w-1/2 md:pr-8 mb-8 md:mb-0">
+                        <h3 class="text-2xl font-bold text-gray-800 mb-4">Sync Your WhatsApp</h3>
+                        <p class="text-gray-600 mb-6">
+                            Enter this code in your WhatsApp app to connect and start sending mass messages instantly.
+                        </p>
+                        
+                        <div class="bg-gray-100 py-4 px-6 rounded-xl inline-block mb-4">
+                            <span class="text-3xl font-mono font-bold tracking-widest">233-928</span>
+                        </div>
+                        
+                        <button id="copyCodeBtnCTA" class="flex items-center justify-center mx-auto px-6 py-3 bg-green-500 text-white rounded-lg hover:bg-green-600 transition">
+                            <i class="fas fa-copy mr-2"></i> Copy Code
+                        </button>
+                        
+                        <div id="codeCopiedMessageCTA" class="hidden mt-3 text-green-500 font-medium">
+                            <i class="fas fa-check-circle mr-1"></i> Code copied!
+                        </div>
+                    </div>
+                    
+                    <div class="md:w-1/2 md:border-l md:pl-8 border-gray-200">
+                        <div class="text-left">
+                            <h4 class="font-bold text-gray-800 mb-4">Beta Benefits:</h4>
+                            <ul class="space-y-3 text-gray-600">
+                                <li class="flex items-center">
+                                    <i class="fas fa-check text-green-500 mr-2"></i>
+                                    <span>100% Free during beta</span>
+                                </li>
+                                <li class="flex items-center">
+                                    <i class="fas fa-check text-green-500 mr-2"></i>
+                                    <span>Unlimited messages</span>
+                                </li>
+                                <li class="flex items-center">
+                                    <i class="fas fa-check text-green-500 mr-2"></i>
+                                    <span>All premium features included</span>
+                                </li>
+                                <li class="flex items-center">
+                                    <i class="fas fa-check text-green-500 mr-2"></i>
+                                    <span>Priority support</span>
+                                </li>
+                                <li class="flex items-center">
+                                    <i class="fas fa-check text-green-500 mr-2"></i>
+                                    <span>Early adopter benefits</span>
+                                </li>
+                            </ul>
+                            
+                            <p class="mt-4 text-sm text-gray-500">
+                                <i class="fas fa-info-circle mr-1"></i> Limited spots available. May be priced in the future.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-white py-12">
+        <div class="container mx-auto px-4">
+            <div class="grid md:grid-cols-4 gap-8">
+                <div>
+                    <h3 class="text-2xl font-bold mb-4">Masswhats</h3>
+                    <p class="text-gray-400 mb-4">
+                        The ultimate solution for WhatsApp mass messaging that saves time and increases engagement.
+                    </p>
+                    <div class="flex space-x-4">
+                        <a href="#" class="text-gray-400 hover:text-white transition">
+                            <i class="fab fa-facebook-f"></i>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-white transition">
+                            <i class="fab fa-twitter"></i>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-white transition">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-white transition">
+                            <i class="fab fa-linkedin-in"></i>
+                        </a>
+                    </div>
+                </div>
+                
+                <div>
+                    <h4 class="font-bold mb-4">Product</h4>
+                    <ul class="space-y-2">
+                        <li><a href="#features" class="text-gray-400 hover:text-white transition">Features</a></li>
+                        <li><a href="#how-it-works" class="text-gray-400 hover:text-white transition">How It Works</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition">API</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition">Integrations</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h4 class="font-bold mb-4">Resources</h4>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="text-gray-400 hover:text-white transition">Blog</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition">Help Center</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition">Case Studies</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition">Webinars</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h4 class="font-bold mb-4">Company</h4>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="text-gray-400 hover:text-white transition">About Us</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition">Careers</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition">Contact</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition">Privacy Policy</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition">Terms of Service</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="border-t border-gray-700 mt-12 pt-8 text-center text-gray-400">
+                <p>&copy; 2025 Masswhats. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript for basic interactions -->
+    <script>
+        // Simple scroll to section functionality
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                if (targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if (targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 100,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+
+        // WhatsApp connection functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('DOM loaded, initializing WhatsApp connection...');
+            
+            // Elements for QR code
+            const qrcodeLoading = document.getElementById('qrcode-loading');
+            const qrcodeImage = document.getElementById('qrcode-image');
+            
+            // Elements for phone code
+            const phoneCodeLoading = document.getElementById('phone-code-loading');
+            const phoneCode = document.getElementById('phone-code');
+            
+            // Copy button elements
+            const copyBtn = document.getElementById('copyCodeBtn');
+            const copiedMessage = document.getElementById('codeCopiedMessage');
+            
+            // No fallback - we'll rely on the API response only
+            
+            // Function to fetch WhatsApp connection data
+            async function fetchWhatsAppConnection() {
+                console.log('Fetching WhatsApp connection data...');
+                try {
+                    const response = await fetch('/api/whatsapp-connect');
+                    console.log('API response received');
+                    const data = await response.json();
+                    console.log('API data:', data);
+                    
+                    if (data.success) {
+                        // If we have a QR code
+                        if (data.qrcode) {
+                            console.log('QR code received');
+                            // Show QR code
+                            if (qrcodeLoading && qrcodeImage) {
+                                qrcodeLoading.classList.add('hidden');
+                                qrcodeImage.src = data.qrcode;
+                                qrcodeImage.classList.remove('hidden');
+                            }
+                            
+                            // Show phone code if available
+                            if (data.phoneCode && phoneCodeLoading && phoneCode) {
+                                console.log('Phone code received:', data.phoneCode);
+                                phoneCodeLoading.classList.add('hidden');
+                                phoneCode.textContent = data.phoneCode;
+                                phoneCode.classList.remove('hidden');
+                            } else {
+                                console.log('No phone code in response');
+                                // If no phone code, show a message
+                                if (phoneCodeLoading && phoneCode) {
+                                    phoneCodeLoading.classList.add('hidden');
+                                    phoneCode.textContent = "Connecting...";
+                                    phoneCode.classList.remove('hidden');
+                                }
+                            }
+                        } else {
+                            console.log('No QR code in response');
+                            // If no QR code (already connected or other state)
+                            if (qrcodeLoading && qrcodeImage) {
+                                qrcodeLoading.classList.add('hidden');
+                                qrcodeImage.src = "https://placehold.co/300x300/EEE/31343C?text=Already+Connected";
+                                qrcodeImage.classList.remove('hidden');
+                            }
+                            
+                            if (phoneCodeLoading && phoneCode) {
+                                phoneCodeLoading.classList.add('hidden');
+                                phoneCode.textContent = "Connecting...";
+                                phoneCode.classList.remove('hidden');
+                            }
+                        }
+                    } else {
+                        console.log('API returned error:', data.error);
+                        // Handle error
+                        if (qrcodeLoading) qrcodeLoading.classList.add('hidden');
+                        if (phoneCodeLoading) phoneCodeLoading.classList.add('hidden');
+
+                        // Show error message
+                        if (qrcodeImage) {
+                            qrcodeImage.src = "https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=Error+connecting+to+WhatsApp";
+                            qrcodeImage.classList.remove('hidden');
+                        }
+                        
+                        if (phoneCode) {
+                            phoneCode.textContent = "Error";
+                            phoneCode.classList.remove('hidden');
+                            phoneCode.classList.add('text-red-600');
+                        }
+                        
+                        // Show error message below the code
+                        const errorMsg = document.createElement('div');
+                        errorMsg.className = 'mt-2 text-red-600 text-sm';
+                        errorMsg.innerHTML = `<i class="fas fa-exclamation-circle mr-1"></i> ${data.error || 'Error connecting to WhatsApp'}`;
+                        phoneCode.parentNode.appendChild(errorMsg);
+                    }
+                } catch (error) {
+                    console.error('Error fetching WhatsApp connection:', error);
+
+                    // Show error message
+                    if (qrcodeLoading) qrcodeLoading.classList.add('hidden');
+                    if (phoneCodeLoading) phoneCodeLoading.classList.add('hidden');
+
+                    // Show error message
+                    if (qrcodeImage) {
+                        qrcodeImage.src = "https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=Error+connecting+to+WhatsApp";
+                        qrcodeImage.classList.remove('hidden');
+                    }
+                    
+                    if (phoneCode) {
+                        phoneCode.textContent = "233-928";
+                        phoneCode.classList.remove('hidden');
+                    }
+                    
+                    // Show error message below the code
+                    const errorMsg = document.createElement('div');
+                    errorMsg.className = 'mt-2 text-yellow-600 text-sm';
+                    errorMsg.innerHTML = '<i class="fas fa-info-circle mr-1"></i> Using default code. Server connection issue.';
+                    phoneCode.parentNode.appendChild(errorMsg);
+                }
+            }
+            
+            // Fetch WhatsApp connection data on page load
+            fetchWhatsAppConnection();
+            
+            // Setup copy button for static code (fallback)
+            if (copyBtn) {
+                console.log('Setting up copy button');
+                copyBtn.addEventListener('click', function() {
+                    console.log('Copy button clicked');
+                    // Get the code from the span or use fallback
+                    const codeText = phoneCode ? (phoneCode.textContent || '233-928') : '233-928';
+                    console.log('Copying code:', codeText);
+                    
+                    // Use modern clipboard API if available
+                    if (navigator.clipboard && navigator.clipboard.writeText) {
+                        navigator.clipboard.writeText(codeText)
+                            .then(() => {
+                                console.log('Code copied using Clipboard API');
+                                if (copiedMessage) {
+                                    copiedMessage.classList.remove('hidden');
+                                    setTimeout(() => copiedMessage.classList.add('hidden'), 2000);
+                                }
+                            })
+                            .catch(err => {
+                                console.error('Failed to copy:', err);
+                                // Fallback to older method
+                                copyTextFallback(codeText);
+                            });
+                    } else {
+                        // Fallback for older browsers
+                        copyTextFallback(codeText);
+                    }
+                });
+                
+                function copyTextFallback(text) {
+                    console.log('Using fallback copy method');
+                    // Create a temporary input element
+                    const tempInput = document.createElement('input');
+                    tempInput.value = text;
+                    tempInput.style.position = 'absolute';
+                    tempInput.style.left = '-9999px';
+                    document.body.appendChild(tempInput);
+                    
+                    // Select and copy the text
+                    tempInput.select();
+                    let success = false;
+                    try {
+                        success = document.execCommand('copy');
+                    } catch (err) {
+                        console.error('Failed to copy with execCommand:', err);
+                    }
+                    
+                    // Remove the temporary input
+                    document.body.removeChild(tempInput);
+                    
+                    // Show the copied message
+                    if (success && copiedMessage) {
+                        copiedMessage.classList.remove('hidden');
+                        setTimeout(() => copiedMessage.classList.add('hidden'), 2000);
+                    }
+                }
+            }
+            
+            // Setup CTA copy button if it exists
+            const copyBtnCTA = document.getElementById('copyCodeBtnCTA');
+            const copiedMessageCTA = document.getElementById('codeCopiedMessageCTA');
+            
+            if (copyBtnCTA && copiedMessageCTA) {
+                console.log('Setting up CTA copy button');
+                copyBtnCTA.addEventListener('click', function() {
+                    console.log('CTA copy button clicked');
+                    // Get the code from the span or use fallback
+                    const codeText = phoneCode ? (phoneCode.textContent || '233-928') : '233-928';
+                    console.log('Copying CTA code:', codeText);
+                    
+                    // Use modern clipboard API if available
+                    if (navigator.clipboard && navigator.clipboard.writeText) {
+                        navigator.clipboard.writeText(codeText)
+                            .then(() => {
+                                console.log('CTA code copied using Clipboard API');
+                                copiedMessageCTA.classList.remove('hidden');
+                                setTimeout(() => copiedMessageCTA.classList.add('hidden'), 2000);
+                            })
+                            .catch(err => {
+                                console.error('Failed to copy CTA:', err);
+                                // Fallback to older method
+                                copyTextFallbackCTA(codeText);
+                            });
+                    } else {
+                        // Fallback for older browsers
+                        copyTextFallbackCTA(codeText);
+                    }
+                });
+                
+                function copyTextFallbackCTA(text) {
+                    console.log('Using fallback copy method for CTA');
+                    // Create a temporary input element
+                    const tempInput = document.createElement('input');
+                    tempInput.value = text;
+                    tempInput.style.position = 'absolute';
+                    tempInput.style.left = '-9999px';
+                    document.body.appendChild(tempInput);
+                    
+                    // Select and copy the text
+                    tempInput.select();
+                    let success = false;
+                    try {
+                        success = document.execCommand('copy');
+                    } catch (err) {
+                        console.error('Failed to copy CTA with execCommand:', err);
+                    }
+                    
+                    // Remove the temporary input
+                    document.body.removeChild(tempInput);
+                    
+                    // Show the copied message
+                    if (success) {
+                        copiedMessageCTA.classList.remove('hidden');
+                        setTimeout(() => copiedMessageCTA.classList.add('hidden'), 2000);
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+</html>

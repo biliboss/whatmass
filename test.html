@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Phone Code</title>
+</head>
+<body>
+    <h1>Test Phone Code</h1>
+    
+    <div id="phone-code-container">
+        <div id="phone-code-loading">Loading...</div>
+        <span id="phone-code" style="display: none;">233-928</span>
+    </div>
+    
+    <button id="copyCodeBtn">Copy Code</button>
+    <div id="codeCopiedMessage" style="display: none;">Code copied!</div>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const phoneCodeLoading = document.getElementById('phone-code-loading');
+            const phoneCode = document.getElementById('phone-code');
+            const copyBtn = document.getElementById('copyCodeBtn');
+            const copiedMessage = document.getElementById('codeCopiedMessage');
+            
+            async function fetchWhatsAppConnection() {
+                try {
+                    const response = await fetch('/api/whatsapp-connect');
+                    const data = await response.json();
+                    
+                    console.log('API response:', data);
+                    
+                    if (data.success) {
+                        phoneCodeLoading.style.display = 'none';
+                        phoneCode.textContent = data.phoneCode;
+                        phoneCode.style.display = 'block';
+                    }
+                } catch (error) {
+                    console.error('Error:', error);
+                    phoneCodeLoading.style.display = 'none';
+                    phoneCode.textContent = 'Error loading code';
+                    phoneCode.style.display = 'block';
+                }
+            }
+            
+            fetchWhatsAppConnection();
+            
+            copyBtn.addEventListener('click', function() {
+                const codeText = phoneCode.textContent || '233-928';
+                
+                const tempInput = document.createElement('input');
+                tempInput.value = codeText;
+                document.body.appendChild(tempInput);
+                
+                tempInput.select();
+                document.execCommand('copy');
+                
+                document.body.removeChild(tempInput);
+                
+                copiedMessage.style.display = 'block';
+                
+                setTimeout(function() {
+                    copiedMessage.style.display = 'none';
+                }, 2000);
+            });
+        });
+    </script>
+</body>
+</html>
